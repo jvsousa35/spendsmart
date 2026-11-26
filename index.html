@@ -1,0 +1,234 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>SpendSmart | Creative Research Site</title><style>*{box-sizing:border-box}body{margin:0;background:#f4f7f5;color:#182821;font:16px/1.7 system-ui,sans-serif}header{background:#075d43;color:white;padding:24px max(20px,calc((100vw - 940px)/2));font-size:21px;font-weight:800}main{max-width:940px;margin:30px auto;padding:40px;background:white;border:1px solid #dce5df;border-radius:14px}h1{font-size:36px;line-height:1.15;letter-spacing:-1px}h2{font-size:23px;border-top:1px solid #dce5df;padding-top:24px;margin-top:36px;color:#075d43}a{color:#075d43;overflow-wrap:anywhere}table{width:100%;border-collapse:collapse;font-size:14px;margin:20px 0}th,td{border:1px solid #dce5df;padding:10px;text-align:left;vertical-align:top}th{background:#e9f4ee}tr:nth-child(even){background:#f7faf8}footer{text-align:center;padding:20px;color:#51665b}@media(max-width:700px){main{margin:12px;padding:18px}h1{font-size:28px}table{display:block;overflow-x:auto}th,td{min-width:100px}}</style></head><body><header>SpendSmart / Creative Research</header><main><h1 id="spec">SpendSmart — Creative Project Specification (SPEC)</h1>
+<p><strong>Course:</strong> IS218-003 · Creative Review 2<br />
+<strong>Checkpoint:</strong> November 26, 2026 · Specification only<br />
+<strong>Status:</strong> Proposed project plan; checkpoint tests are planned.<br />
+<strong>Tagline:</strong> Track your expenses. Understand your spending.</p>
+<h2>1. Project overview</h2>
+<p>SpendSmart is a personal expense tracking web application for college students and young adults who want to understand their daily spending without connecting a bank account. Users manually record purchases and view their own expense history and monthly category totals. The problem is that small daily purchases can accumulate without people having a clear picture of their spending. The goal is a simple, private record of expenses, not a banking service or financial adviser. The target user is someone with basic web skills who may use either a phone or a computer.</p>
+<h2>2. Scope and requirements</h2>
+<p>The minimum viable product (MVP) is registration, login/logout, adding and saving an expense, private expense history and updating a user's name and email. A user can enter an expense description, positive dollar amount, category and purchase date. Categories are Food and Dining, Transportation, Shopping, Entertainment, Housing and Utilities, Education, Health and Fitness, and Other. Monthly totals, transaction count, category breakdown, editing and deleting are secondary enhancements. Filtering, CSV export and budget limits are future possibilities. Bank integrations, transfers, receipt scanning, AI advice, multiple currencies and shared accounts are excluded. USD is the only currency. This keeps the required journey small enough to complete and explain.</p>
+<h2>3. User journey and screen plan</h2>
+<table>
+<thead>
+<tr>
+  <th>Screen</th>
+  <th>User action</th>
+  <th>Expected outcome</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>Registration</td>
+  <td>Enter name, email and password</td>
+  <td>Account created; signed in</td>
+</tr>
+<tr>
+  <td>Login</td>
+  <td>Enter registered email and password</td>
+  <td>Private dashboard appears</td>
+</tr>
+<tr>
+  <td>Dashboard</td>
+  <td>Select Add expense</td>
+  <td>Expense form opens</td>
+</tr>
+<tr>
+  <td>Add expense</td>
+  <td>Enter Groceries, $12.34, Food and Dining, today's date; save</td>
+  <td>Record is validated and persisted</td>
+</tr>
+<tr>
+  <td>History</td>
+  <td>Open previously saved expenses</td>
+  <td>Groceries appears with amount, category and date</td>
+</tr>
+<tr>
+  <td>Account</td>
+  <td>Change name or email and save</td>
+  <td>Profile is updated; updated email works on next sign-in</td>
+</tr>
+<tr>
+  <td>Logout</td>
+  <td>Select Sign out</td>
+  <td>Private pages require authentication again</td>
+</tr>
+</tbody>
+</table>
+<p>Navigation flow: Register / Sign in → Dashboard → Add expense → Save → Private history → Account → Sign out. Dashboard and history share a clear navigation bar. Empty states tell the user how to create their first expense. On phones, dashboard cards stack and form fields remain readable. The category visualization includes text amounts so meaning does not depend on color.</p>
+<h2>4. User stories and acceptance criteria</h2>
+<table>
+<thead>
+<tr>
+  <th>ID</th>
+  <th>Story</th>
+  <th>Acceptance criterion</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>US-01</td>
+  <td>As a new user, I want an account so my expenses are private.</td>
+  <td>Valid registration creates one account; duplicate email is rejected.</td>
+</tr>
+<tr>
+  <td>US-02</td>
+  <td>As a returning user, I want to sign in securely.</td>
+  <td>Correct credentials open the dashboard; incorrect credentials do not.</td>
+</tr>
+<tr>
+  <td>US-03</td>
+  <td>As a student, I want to record a purchase.</td>
+  <td>Valid details save; negative, blank or invalid inputs are rejected.</td>
+</tr>
+<tr>
+  <td>US-04</td>
+  <td>As a user, I want to find previous expenses.</td>
+  <td>Records persist after logout and login and only belong to me.</td>
+</tr>
+<tr>
+  <td>US-05</td>
+  <td>As a user, I want to update my account.</td>
+  <td>Valid name/email changes persist; duplicate email is rejected.</td>
+</tr>
+<tr>
+  <td>US-06</td>
+  <td>As a user, I want to understand spending.</td>
+  <td>Monthly total equals the sum of my current-month records.</td>
+</tr>
+<tr>
+  <td>US-07</td>
+  <td>As a user, I want to correct a mistake.</td>
+  <td>I can edit or delete only my own expense.</td>
+</tr>
+</tbody>
+</table>
+<p>US-01 through US-05 define the required first slice. US-06 and US-07 are enhancements. Each story has an observable acceptance criterion rather than relying on subjective claims.</p>
+<h2>5. Technical architecture and data flow</h2>
+<p>Proposed stack: HTML and CSS for semantic, responsive pages; Python/FastAPI for routes and server-side validation; Jinja2 templates for rendering HTML; SQLite for persistent relational storage; Uvicorn for local development; GitHub for source and issues; pytest with FastAPI TestClient for automated checks; Chrome DevTools/Lighthouse for browser measurement. Native HTML progress elements can show category proportions without a chart library. These choices reduce external dependencies and fit a small single-server application. FastAPI replaces the earlier proposed Flask stack because the available development environment supports it; verify course-specific stack requirements before adopting it as final.</p>
+<p>A browser submits an HTML form over HTTP locally (HTTPS in any public deployment). The server checks the session and CSRF token, validates inputs, determines the owner from the authenticated session, and sends parameterized SQL to SQLite. SQLite persists records. The server queries records by owner and renders an HTML response or redirects to the history page. The browser never directly reads the database. The database file stays on the server and is excluded from Git. A public static research site can host this SPEC separately from the running application.</p>
+<h2>6. Database design</h2>
+<table>
+<thead>
+<tr>
+  <th>Table</th>
+  <th>Fields</th>
+  <th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>users</td>
+  <td>id (PK), name, email (unique), password_hash</td>
+  <td>Identity and account information</td>
+</tr>
+<tr>
+  <td>expenses</td>
+  <td>id (PK), user_id (FK), description, amount_cents, category, spent_on</td>
+  <td>Private expense records</td>
+</tr>
+<tr>
+  <td>sessions</td>
+  <td>token (hashed PK), user_id (nullable FK), csrf, expires</td>
+  <td>Server-side login state and form protection</td>
+</tr>
+</tbody>
+</table>
+<p>One user can have many expenses; every expense belongs to exactly one user. A foreign key enforces ownership relationships and an owner/date index supports history queries. Store amounts as integer cents, not floating-point numbers, to avoid rounding errors. The date uses ISO format. A database constraint rejects nonpositive amounts; server-side validation also limits length, category, amount and date. Emails are unique and normalized to lowercase.</p>
+<h2>7. Security and privacy</h2>
+<p>Passwords are salted and hashed using scrypt, never stored in plaintext. Sessions use random opaque tokens, stored as hashes on the server, and HttpOnly/SameSite cookies. Rotate the session when signing in and delete it on logout. Use Secure cookies and HTTPS when hosted publicly. State-changing requests use CSRF tokens and POST. All protected routes require a valid session; read, edit and delete queries constrain both the expense identifier and the authenticated user ID. Return 404 for another user's expense rather than revealing its existence. Parameterized SQL helps prevent SQL injection; HTML templates escape user input. Responses containing private information should not be cached. The application collects name, email and manually entered expense data only; never request bank credentials, card numbers or account balances. Use invented data in screenshots and testing; do not publish the database, session cookies or passwords. Production improvements include login rate limiting, email verification, reauthentication before sensitive changes, account deletion, backups and deployment security review.</p>
+<h2>8. Design pattern comparison</h2>
+<p>A simple alternative is one large script that combines form HTML, SQL queries, validation and business rules for every page. This is quick initially, but duplicates ownership checks and makes testing and maintenance difficult. SpendSmart will use an MVC-inspired separation: models/data access (SQLite schema and database helper), views (Jinja templates and CSS), and controllers (FastAPI route functions). The model remains lightweight rather than adding an ORM or repository layer for a small project. This makes it easier to test a route, change the interface without changing SQL, and reuse security and validation helpers. The trade-off is a few additional files and conventions; the benefit is clearer responsibilities. It is not a strict, fully separated MVC framework.</p>
+<h2>9. Planned checks</h2>
+<p>All entries below are <strong>planned for the course checkpoint</strong>; no user/peer/browser test results are claimed here. Any separate developer smoke-test evidence belongs in a later implementation record.</p>
+<table>
+<thead>
+<tr>
+  <th>ID</th>
+  <th>Planned procedure</th>
+  <th>Expected result</th>
+  <th>Status</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>T01</td>
+  <td>Register with a new email; try registering again with the same email.</td>
+  <td>First succeeds; duplicate rejected.</td>
+  <td>Planned</td>
+</tr>
+<tr>
+  <td>T02</td>
+  <td>Sign out, try wrong password, then correct password.</td>
+  <td>Wrong password rejected; correct password opens dashboard.</td>
+  <td>Planned</td>
+</tr>
+<tr>
+  <td>T03</td>
+  <td>Add $12.34 Groceries and open history; log out and back in.</td>
+  <td>Same expense remains in history.</td>
+  <td>Planned</td>
+</tr>
+<tr>
+  <td>T04</td>
+  <td>Submit negative, missing or invalid expense values directly to server.</td>
+  <td>Invalid record not saved.</td>
+  <td>Planned</td>
+</tr>
+<tr>
+  <td>T05</td>
+  <td>Create users A and B; request A's edit URL and attempt edit/delete as B.</td>
+  <td>B cannot view A's record; unauthorized mutations fail and A's record remains.</td>
+  <td>Planned</td>
+</tr>
+<tr>
+  <td>T06</td>
+  <td>Open history while signed out; submit a form with an invalid CSRF token.</td>
+  <td>Redirect to login or deny; invalid token rejected.</td>
+  <td>Planned</td>
+</tr>
+<tr>
+  <td>T07</td>
+  <td>Update account name and email; sign out and sign in using updated email.</td>
+  <td>Changes persist.</td>
+  <td>Planned</td>
+</tr>
+<tr>
+  <td>T08</td>
+  <td>Add two current-month expenses ($12.34 and $7.66).</td>
+  <td>Monthly total shows $20.00.</td>
+  <td>Planned</td>
+</tr>
+<tr>
+  <td>T09</td>
+  <td>Use only Tab, Shift+Tab, Enter and arrow keys to complete login, add expense and account update.</td>
+  <td>Logical order, visible focus, no trap; forms operable without a mouse.</td>
+  <td>Planned</td>
+</tr>
+<tr>
+  <td>T10</td>
+  <td>Use Chrome DevTools at 390×844 and a physical phone if available.</td>
+  <td>No horizontal page scrolling; text, controls and navigation usable.</td>
+  <td>Planned</td>
+</tr>
+<tr>
+  <td>T11</td>
+  <td>Inspect browser cookies, source and repository; use synthetic data.</td>
+  <td>No plaintext passwords, exposed session tokens in repository or database file in public site; private session cookie is HttpOnly.</td>
+  <td>Planned</td>
+</tr>
+</tbody>
+</table>
+<p>Use pytest for T01–T08 and manual browser checks for T09–T11. Record actual date, environment, result, evidence and fix when each check is performed.</p>
+<h2>10. Planned measurement</h2>
+<p>Measure the dashboard's Largest Contentful Paint (LCP) in Chrome Lighthouse using mobile settings. Target: 2.5 seconds or less under the selected test conditions. Sign in using a synthetic account with ten expenses, run the Lighthouse performance audit three times under the same settings, record the median LCP, browser version and device/emulation settings. Use the result to decide whether to reduce assets or simplify the dashboard. Also inspect Lighthouse accessibility findings; automated results supplement, not replace, the keyboard and phone checks. No measurement result is reported at this checkpoint.</p>
+<h2 id="ai-review">11. AI Review and Scope Decision</h2>
+<h3>11.1 AI-assisted planning</h3><p>I chose SpendSmart after comparing several small application ideas. ChatGPT helped review the assignment, propose user stories, draft the specification and develop initial code. I selected a manual expense tracker to keep the project practical and manageable.</p>
+<ul><li>As a new user, I want to register and sign in securely.</li><li>As a user, I want to record and categorize an expense.</li><li>As a user, I want to retrieve my saved expenses in private history.</li><li>As a user, I want to update my account information.</li><li>As a user, I want to see a summary of my spending.</li></ul>
+<h3>11.2 Technical research findings</h3><p>ChatGPT reviewed the following official technical resources on November 25, 2026, Eastern time, and identified how they inform the proposed design.</p>
+<ul><li><strong><a href="https://fastapi.tiangolo.com/">FastAPI documentation</a>:</strong> Its request routing and validation features support the choice of a Python backend for processing expense submissions and account requests.</li><li><strong><a href="https://www.sqlite.org/foreignkeys.html">SQLite foreign key documentation</a>:</strong> Each expense will reference its owner's account. Foreign key enforcement will be enabled for database connections to maintain valid relationships.</li><li><strong><a href="https://cheatsheetseries.owasp.org/cheatsheets/Authorization_Cheat_Sheet.html">OWASP Authorization Cheat Sheet</a>:</strong> Access should be denied by default and permissions checked for every protected request. SpendSmart will check expense ownership on the server, including when a record ID is guessed.</li><li><strong><a href="https://developer.chrome.com/docs/lighthouse/overview/">Chrome Lighthouse documentation</a>:</strong> Lighthouse supports performance and accessibility audits. The planned dashboard measurement will use mobile Lighthouse settings, with separate manual keyboard and phone checks.</li></ul>
+<h3>11.3 Scope and responsibility</h3><p>The required account and expense journey takes priority over charts and filters. The proposed design stores monetary amounts as integer cents, uses manual entry in US dollars and excludes banking integrations, payment processing and automated financial advice. AI assisted with research, documentation and initial code; I am responsible for reviewing the technical choices, confirming scope and explaining the implementation. The research findings above are AI-assisted summaries, not a claim of independent student review or completed testing.</p>
+<h2 id="peer-review">12. Peer Review and Revision Record</h2>
+<h3>12.1 Review objective</h3><p>The planned classmate review will assess whether the proposed navigation, expense entry and account management are understandable. The task is to explain how to sign in, record a $12.34 grocery expense, retrieve it from private history and update an email address. I will observe without coaching and exchange feedback with the reviewer.</p>
+<h3>12.2 Review status</h3><ul><li>Reviewer and date: Pending.</li><li>GitHub feedback issue: Pending.</li><li>Observed feedback and resulting revision: Pending.</li><li>Retest request and result: Pending.</li></ul><p>Actual feedback, the resulting decision or fix, and a repeat-task request will be recorded after the review. No peer review has been claimed as completed.</p>
+<h2 id="project-links">13. Project Links</h2><ul><li><a href="https://jvsousa35.github.io/spendsmart/#spec">Creative research website / SPEC</a></li><li><a href="https://github.com/jvsousa35/spendsmart">SpendSmart GitHub repository</a></li><li>Separate career research site: Pending publication.</li><li>Peer review issue: Pending review.</li><li>Application deployment and checkpoint test evidence: Planned for later checkpoints.</li></ul><p>The SPEC is hosted through GitHub Pages. The repository will serve as the central location for documentation, revisions, source code and test evidence. Review 2 is a planning checkpoint; course tests remain marked as planned.</p>
+</main><footer>IS218-003 · Creative Project Review 2</footer></body></html>
